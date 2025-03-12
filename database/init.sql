@@ -19,9 +19,10 @@ CREATE INDEX idx_livre_titre ON livre(titre);
 CREATE TABLE auteur (
   id_auteur INTEGER PRIMARY KEY AUTOINCREMENT,
   nom TEXT NOT NULL,
-  prenom TEXT,
-  date_naissance DATE,
-  nationalite TEXT
+  prenom TEXT NOT NULL,
+  date_naissance DATE NOT NULL,
+  nationalite TEXT NOT NULL,
+  UNIQUE (nom, prenom, date_naissance, nationalite)
 );
 
 CREATE INDEX idx_auteur_nom ON auteur(nom);
@@ -32,7 +33,8 @@ CREATE TABLE membre (
   prenom TEXT NOT NULL,
   email TEXT NOT NULL UNIQUE,
   adresse TEXT,
-  date_inscription DATE DEFAULT (date('now'))
+  date_inscription DATE DEFAULT (date('now')),
+  UNIQUE (nom, prenom, email, adresse)
 );
 
 CREATE INDEX idx_membre_email ON membre(email);

@@ -1,3 +1,4 @@
+import { BadRequestError, NotFoundError } from "../errors/customErrors.js";
 import { sendResponse } from "./responseUtils.js";
 
 export const parseRequestBody = (req) => {
@@ -32,6 +33,10 @@ export const handleRequest = async (req, res, callback) => {
     const code = defaultSuccessCodes[req.method] || 200;
     sendResponse(res, code, data);
   } catch (error) {
+    if (error.message.includes("UNIQUE constraint failed")) {
+      return sendResponse(res, 400, null, "Doublon détecté");
+    }
+
     let statusCode;
     if (error instanceof NotFoundError) {
       statusCode = 404;

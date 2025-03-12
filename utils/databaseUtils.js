@@ -8,8 +8,6 @@ const connect = async (dbfile) => {
       driver: sqlite3.Database,
     });
 
-    console.log("Connexion avec la base de données réussie");
-
     return db;
   } catch (error) {}
 };

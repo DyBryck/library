@@ -16,6 +16,4 @@ const server = http.createServer((req, res) => {
   handleRoute(req, res);
 });
 
-server.listen(SERVER_PORT, () =>
-  console.log(`Serveur en écoute sur le port ${SERVER_PORT}`),
-);
+server.listen(SERVER_PORT, () => console.log(`Serveur en écoute sur le port ${SERVER_PORT}`));
