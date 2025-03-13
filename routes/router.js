@@ -9,7 +9,6 @@ export const handleRoute = (req, res) => {
 
   if (route) {
     const matches = pathname.match(route.regex);
-
     const param = matches && matches.length > 1 ? parseInt(matches[1], 10) : null;
     return route.handler(req, res, param);
   }

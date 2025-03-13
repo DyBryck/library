@@ -59,7 +59,7 @@ export class AuthorRepository extends Repository {
       `
       UPDATE auteur
       SET nom = ?, prenom = ?, date_naissance = ?, nationalite = ?
-      WHERE id_auteur = ?
+      WHERE id_auteur = ?;
     `,
       [lastName, firstName, birthDate, nationality, id],
     );
@@ -71,7 +71,7 @@ export class AuthorRepository extends Repository {
     const author = this.getByID(id);
     if (!author) return null;
 
-    await this.db.run("DELETE FROM auteur WHERE id_auteur = ?", [id]);
+    await this.db.run("DELETE FROM auteur WHERE id_auteur = ?;", [id]);
 
     return author;
   }

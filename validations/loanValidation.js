@@ -6,10 +6,16 @@ export const validateLoan = (loan, partial = false) => {
     throw new BadRequestError("Aucun contenu à modifier");
   }
 
-  const allowedKeys = ["id_membre", "id_exemplaire", "date_emprunt", "date_retour_prevue"];
+  const allowedKeys = [
+    "id_membre",
+    "id_exemplaire",
+    "id_livre",
+    "date_emprunt",
+    "date_retour_prevue",
+  ];
   const requiredKeys = partial
     ? []
-    : ["id_membre", "id_exemplaire", "date_emprunt", "date_retour_prevue"];
+    : ["id_membre", "id_exemplaire", "id_livre", "date_emprunt", "date_retour_prevue"];
 
   Object.keys(loan).forEach((key) => {
     if (!allowedKeys.includes(key)) {
@@ -23,7 +29,7 @@ export const validateLoan = (loan, partial = false) => {
     }
   });
 
-  ["id_membre", "id_exemplaire"].forEach((field) => {
+  ["id_membre", "id_exemplaire", "id_livre"].forEach((field) => {
     if (field in loan) {
       const error = validateNumber(loan[field]);
       if (error) {

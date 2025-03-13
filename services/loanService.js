@@ -1,5 +1,5 @@
 import { NotFoundError } from "../errors/customErrors.js";
-import { loanRepository, memberRepository } from "../repositories/index.js";
+import { bookRepository, loanRepository, memberRepository } from "../repositories/index.js";
 import { computeReturnDate } from "../utils/utils.js";
 import { validateLoan } from "../validations/loanValidation.js";
 
@@ -20,34 +20,35 @@ export const createLoan = async (body) => {
   const dateFormated = date.toISOString().split("T")[0];
   const loan = { ...body, date_emprunt: dateFormated, date_retour_prevue: computeReturnDate() };
 
-  validateLoan(loan);
-
   const member = await memberRepository.getByID(body.id_membre);
   if (!member) {
     throw new NotFoundError("Le membre n'existe pas");
   }
 
-  // Si l'exemplaire existe bien, puis si il est disponible
+  const book = await bookRepository.getByID(body.id_livre);
+  if (!book) {
+    throw new NotFoundError("Le livre n'existe pas");
+  }
 
-  const loanCreated = await loanRepository.create(loan);
+  const copy = await bookRepository.getCopyByID(body.id_livre);
+  if (!copy) {
+    throw new NotFoundError("Exemplaire non disponible / introuvable");
+  }
+  const finalLoan = { ...loan, id_exemplaire: copy.id_exemplaire };
+  validateLoan(finalLoan);
+
+  const loanCreated = await loanRepository.create(finalLoan);
+
   return loanCreated;
 };
 
-export const updateLoan = async (id, body) => {
-  const loan = await loanRepository.update(id, body);
-
-  if (!loan) {
-    throw new NotFoundError("Auteur non trouvé");
-  }
-
-  return loan;
-};
+export const updateLoan = async (id, body) => {};
 
 export const deleteLoan = async (id) => {
   const loan = await loanRepository.delete(id);
 
   if (!loan) {
-    throw new NotFoundError("Auteur non trouvé");
+    throw new NotFoundError("Emprunt non trouvé");
   }
 
   return loan;

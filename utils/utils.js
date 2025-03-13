@@ -37,6 +37,10 @@ export const handleRequest = async (req, res, callback) => {
       return sendResponse(res, 400, null, "Doublon détecté");
     }
 
+    if (error.message.includes("FOREIGN KEY constraint failed")) {
+      return sendResponse(res, 404, null, "Un élément n'existe pas");
+    }
+
     let statusCode;
     if (error instanceof NotFoundError) {
       statusCode = 404;

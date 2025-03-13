@@ -75,7 +75,7 @@ AFTER INSERT ON emprunt
 BEGIN
     UPDATE exemplaire
     SET disponible = 0
-    WHERE id_exemplaire = NEW.ID_Exemplaire;
+    WHERE id_exemplaire = NEW.ID_exemplaire;
 END;
 
 CREATE TRIGGER update_exemplaire_apres_retour

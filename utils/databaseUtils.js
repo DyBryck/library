@@ -8,6 +8,8 @@ const connect = async (dbfile) => {
       driver: sqlite3.Database,
     });
 
+    await db.run("PRAGMA foreign_keys = ON");
+
     return db;
   } catch (error) {}
 };
