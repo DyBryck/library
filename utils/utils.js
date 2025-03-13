@@ -1,4 +1,4 @@
-import { BadRequestError, NotFoundError } from "../errors/customErrors.js";
+import { BadRequestError, MultipleErrors, NotFoundError } from "../errors/customErrors.js";
 import { sendResponse } from "./responseUtils.js";
 
 export const parseRequestBody = (req) => {
@@ -40,11 +40,23 @@ export const handleRequest = async (req, res, callback) => {
     let statusCode;
     if (error instanceof NotFoundError) {
       statusCode = 404;
-    } else if (error instanceof BadRequestError) {
+    } else if (error instanceof BadRequestError || error instanceof MultipleErrors) {
       statusCode = 400;
     } else {
       statusCode = 500;
     }
-    sendResponse(res, statusCode, null, error.message);
+
+    if (error instanceof MultipleErrors) {
+      sendResponse(res, 400, statusCode, { error: error.message, errors: error.errors });
+    } else {
+      sendResponse(res, statusCode, null, error.message);
+    }
   }
+};
+
+export const computeReturnDate = () => {
+  const now = new Date();
+  now.setDate(now.getDate() + 15);
+
+  return now.toISOString().split("T")[0];
 };

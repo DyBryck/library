@@ -1,4 +1,5 @@
 import { authorRoutes } from "./auteurs.js";
+import { loanRoutes } from "./emprunts.js";
 
 export const routeList = [
   // Auteurs
@@ -26,5 +27,22 @@ export const routeList = [
     method: "DELETE",
     regex: /^\/auteurs\/(\d+)$/,
     handler: authorRoutes["DELETE /auteurs/:id"],
+  },
+
+  // Emprunts
+  {
+    method: "GET",
+    regex: /^\/emprunts$/,
+    handler: loanRoutes["GET /emprunts"],
+  },
+  {
+    method: "GET",
+    regex: /^\/emprunts\/(\d+)$/,
+    handler: loanRoutes["GET /emprunts/:id"],
+  },
+  {
+    method: "POST",
+    regex: /^\/emprunts$/,
+    handler: loanRoutes["POST /emprunts"],
   },
 ];

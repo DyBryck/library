@@ -11,3 +11,10 @@ export class BadRequestError extends Error {
     this.name = "BadRequestError";
   }
 }
+
+export class MultipleErrors extends Error {
+  constructor(errors) {
+    super("Plusieurs erreurs trouvées");
+    this.errors = errors;
+  }
+}

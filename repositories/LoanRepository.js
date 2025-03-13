@@ -10,9 +10,11 @@ export class LoanRepository extends Repository {
   }
 
   async create(body) {
-    console.log(body);
-    const {} = body;
-    const result = await this.db.run("INSERT INTO emprunt () VALUES (?, ?, ?, ?);", []);
+    const { id_membre, id_exemplaire, date_emprunt, date_retour_prevue } = body;
+    const result = await this.db.run(
+      "INSERT INTO emprunt (id_membre, id_exemplaire, date_emprunt, date_retour_prevue) VALUES (?, ?, ?, ?);",
+      [id_membre, id_exemplaire, date_emprunt, date_retour_prevue],
+    );
 
     if (!result.lastID) {
       throw new Error("Échec lors de la création de l'emprunt");
