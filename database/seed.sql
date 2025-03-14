@@ -12,16 +12,16 @@ INSERT INTO auteur (nom, prenom, date_naissance, nationalite) VALUES
   ('Rowling', 'Joanne', '1965-07-31', 'Britannique'),
   ('Herbert', 'Frank', '1920-10-08', 'Américaine');
 
-INSERT INTO livre (titre, isbn, annee_publication, nb_pages, editeur, categorie_id) VALUES
-  ('Healing Through Words', '9781398518797', 2022, 320, 'Simon & Schuster UK', 3),
-  ('Harry Potter et la Chambre des Secrets', '9788831000154', 2015, 393, 'Pottermore Publishing', 1),
-  ('The Silent Observer', '9781234567897', 2017, 280, 'Observer Press', 1),
-  ('Comic Adventures', '9782345678901', 2020, 150, 'BD Publisher', 2),
-  ('Echoes of Time', '9783456789012', 2018, 200, 'Time Press', 1),
-  ('Whispers of the Soul', '9784567890123', 2019, 250, 'Poetry House', 3),
-  ('Mystery at Midnight', '9785678901234', 2021, 320, 'Mystery Books', 1),
-  ('The Enchanted Forest', '9786789012345', 2022, 410, 'Fantasy House', 1),
-  ('Lines and Rhymes', '9787890123456', 2020, 190, 'Poetic Expressions', 3);
+INSERT INTO livre (titre, isbn, annee_publication, nb_pages, auteur_id, editeur, categorie_id) VALUES
+  ('Healing Through Words', '9781398518797', 2022, 320, 1, 'Simon & Schuster UK', 3),
+  ('Harry Potter et la Chambre des Secrets', '9788831000154', 2015, 393, 4, 'Pottermore Publishing', 1),
+  ('The Silent Observer', '9781234567897', 2017, 280, 2, 'Observer Press', 1),
+  ('Comic Adventures', '9782345678901', 2020, 150, 3, 'BD Publisher', 2),
+  ('Echoes of Time', '9783456789012', 2018, 200, 5, 'Time Press', 1),
+  ('Whispers of the Soul', '9784567890123', 2019, 250, 2, 'Poetry House', 3),
+  ('Mystery at Midnight', '9785678901234', 2021, 320, 3, 'Mystery Books', 1),
+  ('The Enchanted Forest', '9786789012345', 2022, 410, 1, 'Fantasy House', 1),
+  ('Lines and Rhymes', '9787890123456', 2020, 190, 5, 'Poetic Expressions', 3);
 
 INSERT INTO membre (nom, prenom, email, adresse, date_inscription) VALUES
   ('Dupont', 'Jean', 'jean.dupont@mail.com', '123 rue de Paris', '2022-01-15'),

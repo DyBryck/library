@@ -55,7 +55,7 @@ export class AuthorRepository extends Repository {
 
     if (JSON.stringify(oldAuthor) === JSON.stringify(newAuthor)) throw new Error("Rien n'a changé");
 
-    const result = await this.db.run(
+    await this.db.run(
       `
       UPDATE auteur
       SET nom = ?, prenom = ?, date_naissance = ?, nationalite = ?

@@ -45,6 +45,16 @@ export const routeList = [
     regex: /^\/emprunts$/,
     handler: loanRoutes["POST /emprunts"],
   },
+  {
+    method: "PUT",
+    regex: /^\/emprunts$/,
+    handler: loanRoutes["PUT /emprunts"],
+  },
+  {
+    method: "DELETE",
+    regex: /^\/emprunts\/(\d+)$/,
+    handler: loanRoutes["DELETE /emprunts/:id"],
+  },
   // Livres
   {
     method: "GET",
@@ -58,7 +68,7 @@ export const routeList = [
   },
   {
     method: "GET",
-    regex: /^\/livres\/(\d+)\/exemplaire$/,
-    handler: bookRoutes["GET /livres/:id/exemplaire"],
+    regex: /^\/livres\/(\d+)\/exemplaire-disponible$/,
+    handler: bookRoutes["GET /livres/:id/exemplaire-disponible"],
   },
 ];

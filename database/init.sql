@@ -9,8 +9,10 @@ CREATE TABLE livre (
   isbn TEXT UNIQUE,
   annee_publication INTEGER,
   nb_pages INTEGER,
+  auteur_id INTEGER NOT NULL,
   editeur TEXT,
   categorie_id INTEGER NOT NULL,
+  FOREIGN KEY (auteur_id) REFERENCES auteur(id_auteur),
   FOREIGN KEY (categorie_id) REFERENCES categorie(id_categorie)
 );
 

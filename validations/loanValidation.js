@@ -7,15 +7,15 @@ export const validateLoan = (loan, partial = false) => {
   }
 
   const allowedKeys = [
+    "id_emprunt",
     "id_membre",
     "id_exemplaire",
     "id_livre",
-    "date_emprunt",
     "date_retour_prevue",
   ];
   const requiredKeys = partial
-    ? []
-    : ["id_membre", "id_exemplaire", "id_livre", "date_emprunt", "date_retour_prevue"];
+    ? ["id_emprunt"]
+    : ["id_membre", "id_exemplaire", "id_livre", "date_retour_prevue"];
 
   Object.keys(loan).forEach((key) => {
     if (!allowedKeys.includes(key)) {
@@ -38,8 +38,10 @@ export const validateLoan = (loan, partial = false) => {
     }
   });
 
-  const errors = ["date_emprunt", "date_retour_prevue"].flatMap((field) =>
-    validateDate(loan[field]).map((msg) => `${field}: ${msg}`),
-  );
-  if (errors.length > 0) throw new MultipleErrors(errors);
+  if (!partial) {
+    const errors = ["date_retour_prevue"].flatMap((field) =>
+      validateDate(loan[field]).map((msg) => `${field}: ${msg}`),
+    );
+    if (errors.length > 0) throw new MultipleErrors(errors);
+  }
 };

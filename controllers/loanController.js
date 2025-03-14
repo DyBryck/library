@@ -30,3 +30,23 @@ export const createLoan = async (req, res) => {
     };
   });
 };
+
+export const updateLoan = async (req, res) => {
+  handleRequest(req, res, async (body) => {
+    const loan = await loanService.updateLoan(body);
+    return {
+      message: "Emprunt retourné:",
+      loan: loan,
+    };
+  });
+};
+
+export const deleteLoan = async (req, res, id) => {
+  handleRequest(req, res, async () => {
+    const loan = await loanService.deleteLoan(id);
+    return {
+      message: "Emprunt supprimé:",
+      loan: loan,
+    };
+  });
+};

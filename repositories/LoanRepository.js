@@ -10,10 +10,10 @@ export class LoanRepository extends Repository {
   }
 
   async create(body) {
-    const { id_membre, id_exemplaire, date_emprunt, date_retour_prevue } = body;
+    const { id_membre, id_exemplaire, date_retour_prevue } = body;
     const result = await this.db.run(
-      "INSERT INTO emprunt (id_membre, id_exemplaire, date_emprunt, date_retour_prevue) VALUES (?, ?, ?, ?);",
-      [id_membre, id_exemplaire, date_emprunt, date_retour_prevue],
+      "INSERT INTO emprunt (id_membre, id_exemplaire, date_retour_prevue) VALUES (?, ?, ?);",
+      [id_membre, id_exemplaire, date_retour_prevue],
     );
 
     if (!result.lastID) {
@@ -23,7 +23,25 @@ export class LoanRepository extends Repository {
     return await this.getByID(result.lastID);
   }
 
-  async update(id, body) {}
+  async update(body) {
+    const { id_emprunt, date_retour_effective } = body;
+    const oldLoan = await this.getByID(id_emprunt);
 
-  async delete(id) {}
+    if (oldLoan.date_retour_effective !== null) {
+      throw new Error("L'emprunt a déjà été retourné");
+    }
+
+    await this.db.run("UPDATE emprunt SET date_retour_effective = ? WHERE id_emprunt = ?;", [
+      date_retour_effective,
+      id_emprunt,
+    ]);
+
+    return this.getByID(id_emprunt);
+  }
+
+  async delete(id) {
+    const loan = this.getByID(id);
+    await this.db.run("DELETE FROM emprunt WHERE id_emprunt = ?;", [id]);
+    return loan;
+  }
 }
