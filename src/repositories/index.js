@@ -1,5 +1,5 @@
 import { DB_FILE } from "../config/config.js";
-import { AuthorRepository } from "./authorRepository.js";
+import { AuthorRepository } from "./AuthorRepository.js";
 import { BookRepository } from "./BookRepository.js";
 import { LoanRepository } from "./LoanRepository.js";
 import { MemberRepository } from "./MemberRepository.js";

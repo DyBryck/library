@@ -11,7 +11,10 @@ const connect = async (dbfile) => {
     await db.run("PRAGMA foreign_keys = ON");
 
     return db;
-  } catch (error) {}
+  } catch (error) {
+    console.error("Erreur lors de la connexion à SQLite:", error);
+    throw error;
+  }
 };
 
 export default connect;

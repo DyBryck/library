@@ -1,11 +1,11 @@
-export const validateName = (name) => {
+export const validateName = (name: string): string | null => {
   if (!name || name.trim().length < 2) {
     return "Trop court, doit contenir au moins 2 caractères";
   }
   return null;
 };
 
-export const validateEmail = (email) => {
+export const validateEmail = (email: string): string | null => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     return "Adresse email invalide";
@@ -13,7 +13,7 @@ export const validateEmail = (email) => {
   return null;
 };
 
-export const validateNumber = (num) => {
+export const validateNumber = (num: number | string): string | null => {
   if (typeof num === "string" && num.trim().length === 0) {
     return `Le champ est vide`;
   }
@@ -27,7 +27,7 @@ export const validateNumber = (num) => {
   return null;
 };
 
-export const validateDate = (date) => {
+export const validateDate = (date: string): string | string[] => {
   let errors = [];
 
   const dateRegex = /^(\d{4})-(\d{2})-(\d{2})$/;
