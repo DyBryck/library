@@ -1,0 +1,20 @@
+# Dossier contenant les dépendances
+node_modules/
+
+# Fichiers générés par la compilation TypeScript
+dist/
+build/
+
+# Fichier de build incremental généré par TypeScript
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+
+# Fichiers de configuration spécifiques à l'IDE (optionnel)
+.vscode/
+.idea/
+
+# Fichiers d'environnement (optionnel)
+.env
