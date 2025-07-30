@@ -2,6 +2,13 @@ import { BadRequestError, MultipleErrors, NotFoundError } from "../errors/custom
 import { appendLog } from "./logger.js";
 import { sendResponse } from "./responseUtils.js";
 
+/**
+ * Parse le corps de la requête HTTP en JSON.
+ * @function
+ * @param {import('http').IncomingMessage} req - Objet requête HTTP.
+ * @returns {Promise<Object>} Promesse résolue avec les données parsées en JSON.
+ * @throws {Object} Objet d'erreur avec un status et un message en cas de body vide, d'erreur de parsing ou d'erreur serveur.
+ */
 export const parseRequestBody = (req) => {
   return new Promise((resolve, reject) => {
     let body = "";
@@ -12,7 +19,7 @@ export const parseRequestBody = (req) => {
         const parsedData = JSON.parse(body);
         resolve(parsedData);
       } catch (err) {
-        console.error("❌ Erreur JSON:", err.message);
+        console.error("Erreur JSON:", err.message);
         reject({ status: 400, message: "Format JSON invalide" });
       }
     });
@@ -20,6 +27,10 @@ export const parseRequestBody = (req) => {
   });
 };
 
+/**
+ * Dictionnaire des codes de succès HTTP par méthode.
+ * @type {Object.<string, number>}
+ */
 const defaultSuccessCodes = {
   GET: 200,
   POST: 201,
@@ -27,6 +38,17 @@ const defaultSuccessCodes = {
   DELETE: 200,
 };
 
+/**
+ * Handler générique pour traiter les requêtes HTTP.
+ * Centralise la gestion des erreurs, le parsing du body et l'envoi de la réponse.
+ *
+ * @async
+ * @function
+ * @param {import('http').IncomingMessage} req - Objet requête HTTP.
+ * @param {import('http').ServerResponse} res - Objet réponse HTTP.
+ * @param {function(Object=): Promise<any>} callback - Fonction métier à exécuter (prend le body en paramètre si POST ou PUT).
+ * @returns {Promise<void>}
+ */
 export const handleRequest = async (req, res, callback) => {
   try {
     const body = req.method === "POST" || req.method === "PUT" ? await parseRequestBody(req) : null;
@@ -60,6 +82,11 @@ export const handleRequest = async (req, res, callback) => {
   }
 };
 
+/**
+ * Calcule la date de retour prévue à J+15 jours.
+ * @function
+ * @returns {string} Date ISO (YYYY-MM-DD) correspondant à la date du jour + 15 jours.
+ */
 export const computeReturnDate = () => {
   const now = new Date();
   now.setDate(now.getDate() + 15);
